@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جنات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--gold:#eed49e;--cream:#fff5e9}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;color:var(--cream);font-family:"Cairo",sans-serif;
+  background:linear-gradient(145deg,#100b12,#25131e 58%,#100b12)
+}
+button{font:700 16px "Cairo";cursor:pointer}
+#site{display:none}
+.btn{
+  border:0;border-radius:14px;padding:13px 24px;color:#29151c;
+  background:linear-gradient(135deg,#f5dfa9,#d0a05c)
+}
+
+/* الظرف */
+.intro{
+  position:fixed;inset:0;z-index:10;display:grid;place-items:center;
+  background:linear-gradient(145deg,#100b12,#26131f 60%,#100b12);
+  transition:opacity .8s,visibility .8s
+}
+.intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.envelope-wrap{
+  position:relative;width:min(85vw,340px);height:220px;margin:auto;
+  perspective:1000px;cursor:pointer
+}
+.envelope{
+  position:absolute;inset:25px 0 0;height:185px;border-radius:8px;
+  background:linear-gradient(145deg,#d4a76e,#9b5b53)
+}
+.envelope:before,.envelope:after{
+  content:"";position:absolute;bottom:0;width:0;height:0;z-index:2
+}
+.envelope:before{right:0;border-left:170px solid transparent;border-bottom:185px solid #bb8066}
+.envelope:after{left:0;border-right:170px solid transparent;border-bottom:185px solid #c99071}
+.flap{
+  position:absolute;top:25px;left:0;width:0;height:0;z-index:4;
+  border-left:170px solid transparent;border-right:170px solid transparent;
+  border-top:112px solid #e2bd88;transform-origin:top;transition:transform .8s
+}
+.letter{
+  position:absolute;z-index:1;left:8%;top:24px;width:84%;height:160px;
+  border-radius:5px;background:#fff5e9;transition:.9s
+}
+.seal{
+  position:absolute;z-index:5;top:104px;left:calc(50% - 24px);
+  display:grid;place-items:center;width:48px;height:48px;border-radius:50%;
+  background:#782e47;color:#f6dca5;font-size:23px;transition:.3s
+}
+.envelope-wrap.open .flap{transform:rotateX(180deg);z-index:0}
+.envelope-wrap.open .letter{top:-55px;transform:translateY(-35px)}
+.envelope-wrap.open .seal{opacity:0}
+.open-button{display:block;margin:22px auto 0}
+
+/* المحتوى */
+main{width:min(100% - 28px,760px);margin:auto}
+section{
+  margin:20px 0;padding:clamp(20px,5vw,32px);border-radius:22px;
+  border:1px solid #e9c98235;background:#ffffff08
+}
+.promise{text-align:center;font-size:24px;color:var(--gold);font-weight:800}
+
+/* الصور */
+.photo-title{text-align:center;font-size:25px;color:var(--gold);margin:0 0 20px}
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.photo-card{margin:0;overflow:hidden;border-radius:18px;background:#050505}
+.photo-card img{
+  display:block;width:100%;height:clamp(360px,58vw,560px);
+  object-fit:cover;filter:grayscale(100%) brightness(.72) contrast(1.15)
+}
+
+/* الرسالة */
+.hidden-message{
+  display:none;margin-top:20px;padding:22px;border-radius:16px;
+  background:#100d11;border:1px solid #e9c98255;
+  text-align:center;font-size:20px;line-height:2.1
+}
+.hidden-message.show{display:block}
+
+/* مشغلات الفيديو */
+.media-frame{
+  display:block;width:100%;aspect-ratio:16/9;margin:0;
+  border:0;border-radius:16px;background:#000
+}
+.final-message{
+  text-align:center;font-size:clamp(22px,5vw,32px);
+  line-height:2;color:var(--gold)
+}
+@media(max-width:560px){
+  .photo-grid{grid-template-columns:1fr}
+  .photo-card img{height:min(135vw,650px)}
+}
+</style>
+</head>
+
+<body>
+<div class="intro" id="intro">
+  <div>
+    <div class="envelope-wrap" id="envelope" onclick="openEnvelope()">
+      <div class="envelope"></div>
+      <div class="letter"></div>
+      <div class="flap"></div>
+      <div class="seal">♥</div>
+    </div>
+    <button class="btn open-button" onclick="openEnvelope()">افتحي الظرف</button>
+  </div>
+</div>
+
+<div id="site">
+  <main>
+    <section class="promise">وعد مش هزعلك تاني</section>
+
+    <section>
+      <h1 class="photo-title">دي حياتي من غيرك</h1>
+      <div class="photo-grid">
+        <figure class="photo-card">
+          <img src="./902224497_4563689303918941_6357661298312999613_n.jpg" alt="">
+        </figure>
+        <figure class="photo-card">
+          <img src="./904174124_29589054654118955_6049246384556074050_n.jpg" alt="">
+        </figure>
+      </div>
+    </section>
+
+    <section style="text-align:center">
+      <button class="btn" id="messageButton" onclick="toggleMessage()">افتحي الرسالة</button>
+      <div class="hidden-message" id="hiddenMessage">
+        أنا بحبك أوي أقسم بالله، ومكنش قصدي إني أجرحك أو أكسر قلبك.
+      </div>
+    </section>
+
+    <section>
+      <iframe class="media-frame" src="about:blank"
+        data-src="https://www.youtube-nocookie.com/embed/fGFB29lQ-Vs?rel=0"
+        title="خليك معايا"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </section>
+
+    <section>
+      <iframe class="media-frame" src="about:blank"
+        data-src="https://www.youtube-nocookie.com/embed/urmfdWH13OY?rel=0"
+        title="إنشاد القصيدة"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </section>
+
+    <section class="final-message">
+      أنا آسف يا جنات، والله ما كان قصدي أعمل كل ده، أنا مقدرش أعيش من غيرك.
+    </section>
+  </main>
+</div>
+
+<script>
+let opened=false;
+
+function openEnvelope(){
+  if(opened)return;
+  opened=true;
+  document.getElementById("envelope").classList.add("open");
+
+  setTimeout(()=>{
+    document.getElementById("intro").classList.add("hide");
+    document.getElementById("site").style.display="block";
+
+    document.querySelectorAll("iframe[data-src]").forEach(frame=>{
+      frame.src=frame.dataset.src;
+    });
+  },850);
+}
+
+function toggleMessage(){
+  const message=document.getElementById("hiddenMessage");
+  const button=document.getElementById("messageButton");
+  message.classList.toggle("show");
+  button.textContent=message.classList.contains("show")?"اقفلي الرسالة":"افتحي الرسالة";
+}
+</script>
+</body>
+</html>
